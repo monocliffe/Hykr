@@ -4,22 +4,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/Login"
+    <TextView
+        android:id="@+id/justTheWordSteps"
+        android:layout_width="120dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="84dp"
+        android:gravity="center"
+        android:text="@string/stepTv"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/stepReadout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="56dp"
-        android:onClick="onLoginClicked"
-        android:text="Login"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="64dp"
+        android:gravity="center"
+        android:text="@string/initial_counter_value"
+        android:textSize="65sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.903"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/justTheWordSteps"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/view_journey"
+        android:layout_width="143dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="136dp"
+        android:gravity="center"
+        android:text="@string/view_journeys"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/end_journey_button"
+        android:layout_width="114dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="@string/end_journey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.648" />
+
+    <Button
+        android:id="@+id/begin_journey_button"
+        android:layout_width="134dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:text="@string/begin_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/end_journey_button"
+        app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.684" />
+
+    <Button
+        android:id="@+id/view_map_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="588dp"
+        android:text="@string/view_map"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.526" />
 </androidx.constraintlayout.widget.ConstraintLayout>

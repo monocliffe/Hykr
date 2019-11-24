@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='Hykr'
+rootProject.name='JourneyEntry'
