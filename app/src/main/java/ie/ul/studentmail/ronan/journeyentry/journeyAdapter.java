@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class journeyAdapter extends RecyclerView.Adapter<journeyAdapter.MyViewHolder> {
+public class JourneyAdapter extends RecyclerView.Adapter<JourneyAdapter.MyViewHolder> {
     private List<Journey> journeyList;
 
     // Provide a reference to the views for each data item
@@ -24,14 +24,14 @@ public class journeyAdapter extends RecyclerView.Adapter<journeyAdapter.MyViewHo
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public journeyAdapter(List<Journey> myDataset) {
+    public JourneyAdapter(List<Journey> myDataset) {
         journeyList = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public journeyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                     int viewType) {
+    public JourneyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
+                                                          int viewType) {
         // create a new view
         TextView v = (TextView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recycler_view_row, parent, false);

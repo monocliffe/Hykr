@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.Task;
 
@@ -38,7 +39,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     Bundle journeyBundle = new Bundle();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     final int PERMISSIONS_REQUEST_ACTIVITY_RECOGNITION = 1;
-    //FusedLocationProviderClient mFusedLocationProviderClient;
+    FusedLocationProviderClient mFusedLocationProviderClient;
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         //final Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
 
+        //System.out.println(locationResult.toString());
+
 
         itJustSaysSteps =  findViewById(R.id.justTheWordSteps);
 
@@ -62,8 +66,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View view) {
                 stepData.setText("0");
+                count = 0;
                 journeyStartTime = LocalDateTime.now();
-                journeyInfoArray[0] = stepData.getText().toString();
+                journeyInfoArray[0] = "0";
                 journeyInfoArray[1] = journeyStartTime.format(formatter);
                // System.out.println(locationResult.toString());
 
@@ -77,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 Intent intent = new Intent(MainActivity.this, JourneyInfo.class);
                 journeyEndTime = LocalDateTime.now();
+                journeyInfoArray[0] = Integer.toString(count);
                 journeyInfoArray[2] = journeyEndTime.format(formatter);
                 journeyBundle.putStringArray("journey_info", journeyInfoArray);
                 intent.putExtras(journeyBundle);
@@ -101,13 +107,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        PackageManager pm = getPackageManager();
-        if(pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)){
 
-            Toast.makeText(this, "Step sensor located!", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, "No step sensor!", Toast.LENGTH_SHORT).show();
-        }
+        //This is a test to determine if step sensor is on phone
+//        PackageManager pm = getPackageManager();
+//        if(pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_COUNTER)){
+//
+//            Toast.makeText(this, "Step sensor located!", Toast.LENGTH_SHORT).show();
+//        }else{
+//            Toast.makeText(this, "No step sensor!", Toast.LENGTH_SHORT).show();
+//        }
 
     }
 
@@ -119,8 +127,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if(countSensor!=null){
             sensorManager.registerListener(this, countSensor, 2); //Type 2 is delay_ui
+
         }else{
-            //Toast.makeText(this, "Sorry, no sensor found, bad luck!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Sorry, no sensor found!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -136,9 +145,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
 
-        if(appRunning){
-            stepData.setText(String.valueOf(sensorEvent.values[0]));
-        }
+        //if(appRunning){
+            if(sensorEvent.values[0] == (float) 1.0){
+                count++;
+                stepData.setText(Integer.toString(count));
+            }
+            //stepData.setText(String.valueOf(sensorEvent.values[0]));
+            //Toast.makeText(this, "Something happened: " + String.valueOf(sensorEvent.values[0]), Toast.LENGTH_SHORT).show();
+        //}
     }
 
     @Override
@@ -146,6 +160,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+    //in api 29 permission needs to be requested in order to access activity recognition
+    //this is required to use the TYPE_STEP_COUNTER
     private void getActivityPermission() {
         /*
          * Request ACTIVITY recognition permission

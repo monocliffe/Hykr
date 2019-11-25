@@ -36,7 +36,7 @@ public class ViewJourneys extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter
-        mAdapter = new journeyAdapter(jDB.getJourneyDAO().getJourneys());
+        mAdapter = new JourneyAdapter(jDB.getJourneyDAO().getJourneys());
         recyclerView.setAdapter(mAdapter);
 
 

@@ -57,7 +57,7 @@ public class JourneyInfo extends AppCompatActivity {
         viewText.setText(stepCount);
 
         viewText=findViewById(R.id.distanceText);
-        viewText.setText(String.valueOf(distance));
+        viewText.setText(String.format("%.2f km", distance));
 
         viewText=findViewById(R.id.startDateTimeText);
         viewText.setText(journeyStartInfo);
