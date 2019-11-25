@@ -22,7 +22,11 @@
         <activity android:name=".MapActivity"></activity>
         <activity android:name=".ViewJourneys" />
         <activity android:name=".JourneyInfo" />
-        <activity android:name=".MainActivity">
+
+        <activity android:name= ".MainActivity"/>
+
+        <activity android:name=".SplashScreen">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

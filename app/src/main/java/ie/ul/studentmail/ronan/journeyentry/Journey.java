@@ -13,7 +13,7 @@ public class Journey {
     @PrimaryKey(autoGenerate = true)
     private long id;
     private int steps;
-    private double distance;
+    private String distance;
     private String journeyStart;
     private String journeyEnd;
 
@@ -21,7 +21,7 @@ public class Journey {
     public Journey(){
 
     }
-    public Journey(int steps, double distance, String journeyStart, String journeyEnd){
+    public Journey(int steps, String distance, String journeyStart, String journeyEnd){
         this.distance = distance;
         this.steps = steps;
         this.journeyStart = journeyStart;
@@ -44,11 +44,11 @@ public class Journey {
         return steps;
     }
 
-    public void setDistance(double distance){
+    public void setDistance(String distance){
         this.distance = distance;
     }
 
-    public double getDistance() {
+    public String getDistance() {
         return distance;
     }
 
