@@ -193,6 +193,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
          */
         try {
             if (mLocationPermissionGranted) {
+
                 Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
                 locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
                     @Override
