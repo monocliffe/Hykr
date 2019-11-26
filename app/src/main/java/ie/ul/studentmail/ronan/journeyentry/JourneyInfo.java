@@ -73,6 +73,8 @@ public class JourneyInfo extends AppCompatActivity {
 
         Journey journey = new Journey(steps, String.format("%.2f km", distance), journeyStartInfo, journeyEndInfo);
         jDB.getJourneyDAO().addJourney(journey);
+        Intent intent = new Intent(JourneyInfo.this, MainActivity.class);
+        startActivity(intent);
 
         //get info from data fields and make a journey object which can then be added to the database.
     }

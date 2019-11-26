@@ -20,4 +20,9 @@
     <string name="pick_place">Choose a place</string>
     <string name="view_map">View Map</string>
 
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="night_mode">Night Mode</string>
+
 </resources>

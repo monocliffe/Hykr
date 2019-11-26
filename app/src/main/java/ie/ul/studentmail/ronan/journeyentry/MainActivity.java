@@ -45,17 +45,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getActivityPermission();
         stepData = findViewById(R.id.stepReadout);
-
-        //mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        //final Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
-
-        //System.out.println(locationResult.toString());
-
 
         itJustSaysSteps =  findViewById(R.id.justTheWordSteps);
 
@@ -119,6 +112,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+    /*
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    Step Sensor Methods
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    */
     @Override
     //fragment!!!!! Look into this!!!
     protected void onResume() {
@@ -163,9 +161,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //in api 29 permission needs to be requested in order to access activity recognition
     //this is required to use the TYPE_STEP_COUNTER
     private void getActivityPermission() {
-        /*
-         * Request ACTIVITY recognition permission
-         */
+
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 Manifest.permission.ACTIVITY_RECOGNITION)
                 == PackageManager.PERMISSION_GRANTED) {
