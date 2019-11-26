@@ -1,6 +1,8 @@
 package ie.ul.studentmail.ronan.journeyentry;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -26,6 +28,18 @@ public class ViewJourneys extends AppCompatActivity {
         List<Journey> journeyList = jDB.getJourneyDAO().getJourneys();
 
         recyclerView = (RecyclerView) findViewById(R.id.journey_recycler_view);
+
+
+
+
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));
+
+        recyclerView.addItemDecoration(itemDecorator);
+
+
+
+
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView

@@ -7,6 +7,8 @@
     android:background="@color/colorPrimaryDark"
     tools:context=".ViewJourneys">
 
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/journey_recycler_view"
         android:layout_width="341dp"

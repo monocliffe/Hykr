@@ -1,12 +1,15 @@
 package ie.ul.studentmail.ronan.journeyentry;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -16,6 +19,9 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +34,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
+
+    public static final String BUTTON_STATE_DAY = "Button_State_Day";
+    // this is name of shared preferences file, must be same whenever accessing
+    // the key value pair.
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    SharedPreferences sharedpreferences;
+
+
 
     TextView itJustSaysSteps;
     TextView stepData;
@@ -42,17 +56,39 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     FusedLocationProviderClient mFusedLocationProviderClient;
     int count = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        Boolean lastDayButtonState = sharedpreferences.getBoolean(BUTTON_STATE_DAY, false);
+        if(lastDayButtonState)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        else
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+
+
         setContentView(R.layout.activity_main);
         getActivityPermission();
-        stepData = findViewById(R.id.stepReadout);
 
+
+        stepData = findViewById(R.id.stepReadout);
         itJustSaysSteps =  findViewById(R.id.justTheWordSteps);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+
+
+        final ImageButton preferencesButton = findViewById(R.id.preferences);
+        preferencesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(MainActivity.this, OptionsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         final Button startJourneyButton = findViewById(R.id.begin_journey_button);
         startJourneyButton.setOnClickListener(new View.OnClickListener() {

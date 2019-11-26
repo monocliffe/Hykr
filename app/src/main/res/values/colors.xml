@@ -2,8 +2,10 @@
 <resources>
     <color name="colorPrimary">#00b6f2</color>
     <color name="darkerBlue">#0098CA</color>
-    <color name="colorPrimaryDark">#130E1E</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="alternate">#000000</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="buttonTrim">#03FF02</color>
 
 
     <color name="black_overlay">#000000</color>
