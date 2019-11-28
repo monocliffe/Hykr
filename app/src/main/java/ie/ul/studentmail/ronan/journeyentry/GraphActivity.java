@@ -31,7 +31,7 @@ public class GraphActivity extends AppCompatActivity {
         GraphView graphStep = findViewById(R.id.stepGraph);
         LineGraphSeries stepSeries = new LineGraphSeries<>(generateData(1));
         stepSeries.setTitle("Step Log");
-        stepSeries.setColor(Color.BLUE);
+        stepSeries.setColor(R.color.colorB);
         stepSeries.setDrawDataPoints(true);
         stepSeries.setDataPointsRadius(10);
         stepSeries.setThickness(8);
@@ -43,7 +43,7 @@ public class GraphActivity extends AppCompatActivity {
         GraphView graphDist = findViewById(R.id.distGraph);
         LineGraphSeries distSeries = new LineGraphSeries<>(generateData(2));
         stepSeries.setTitle("Distance Log");
-        distSeries.setColor(Color.BLUE);
+        distSeries.setColor(R.color.colorB);
         distSeries.setDrawDataPoints(true);
         distSeries.setDataPointsRadius(10);
         distSeries.setThickness(8);
