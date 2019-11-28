@@ -22,9 +22,9 @@
     <string name="title_activity_graph">Statistics</string>
     <string name="view_graph">Graphs</string>
     <string name="stepTitle">Steps Journal</string>
-    <string name="highestStep">666</string>
+    <string name="highestStep">Highest Steps Taken: </string>
     <string name="distTitle">Distance Journal</string>
-    <string name="highestDist">777</string>
+    <string name="highestDist">Highest Distance: </string>
     <string name="totalJourney">Number of Journeys: </string>
     <string name="totalSteps">Total Steps: </string>
     <string name="totalDist">Total Distance: </string>

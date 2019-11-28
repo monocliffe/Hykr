@@ -74,6 +74,13 @@ public class JourneyInfo extends AppCompatActivity {
         Journey journey = new Journey(steps, distance, journeyStartInfo, journeyEndInfo);
         jDB.getJourneyDAO().addJourney(journey);
 
+        /*Journey journey1 = new Journey(6000, 1200, journeyStartInfo, journeyEndInfo);
+        jDB.getJourneyDAO().addJourney(journey1);
+        Journey journey2 = new Journey(7000, 1400, journeyStartInfo, journeyEndInfo);
+        jDB.getJourneyDAO().addJourney(journey2);
+        Journey journey3 = new Journey(5500, 1100, journeyStartInfo, journeyEndInfo);
+        jDB.getJourneyDAO().addJourney(journey3);*/
+
         //get info from data fields and make a journey object which can then be added to the database.
     }
 }
