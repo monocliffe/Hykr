@@ -27,11 +27,13 @@ import com.google.android.gms.tasks.Task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity implements SensorEventListener, BasicStepListener {
 
     TextView itJustSaysSteps;
     TextView stepData;
-    SensorManager sensorManager;
+    private BasicStepDetector simpleStepDetector;
+    private SensorManager sensorManager;
+    private Sensor accel;
     boolean appRunning = false;
     LocalDateTime journeyStartTime;
     LocalDateTime journeyEndTime;
@@ -115,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
+        Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+
 
         //This is a test to determine if step sensor is on phone
 //        PackageManager pm = getPackageManager();
@@ -137,7 +141,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             sensorManager.registerListener(this, countSensor, 2); //Type 2 is delay_ui
 
         }else{
-            Toast.makeText(this, "Sorry, no sensor found!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Sorry, no STEP SENSOR found!\nResults may be inaccurate!", Toast.LENGTH_LONG).show();
+            accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            simpleStepDetector = new BasicStepDetector();
+            simpleStepDetector.registerListener(this);
+            sensorManager.registerListener(MainActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
         }
     }
 
@@ -151,13 +159,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
+    public void onSensorChanged(SensorEvent event) {
 
         //if(appRunning){
-            if(sensorEvent.values[0] == (float) 1.0){
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            simpleStepDetector.updateAccel(
+                    event.timestamp, event.values[0], event.values[1], event.values[2]);
+        } else if(event.values[0] == (float) 1.0){
                 count++;
                 stepData.setText(Integer.toString(count));
             }
+
             //stepData.setText(String.valueOf(sensorEvent.values[0]));
             //Toast.makeText(this, "Something happened: " + String.valueOf(sensorEvent.values[0]), Toast.LENGTH_SHORT).show();
         //}
@@ -183,6 +195,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     new String[]{Manifest.permission.ACTIVITY_RECOGNITION},
                     PERMISSIONS_REQUEST_ACTIVITY_RECOGNITION);
         }
+    }
+
+    @Override
+    public void step(long timeNs) {
+        count++;
+        stepData.setText(Integer.toString(count));
     }
 
 
