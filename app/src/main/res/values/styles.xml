@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.DayNight">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#ffffff</item>
-        <item name="colorPrimaryDark">#130E1E</item>
+        <item name="colorPrimaryDark">#00b6f2</item>
         <item name="colorAccent">#130E1E</item>
         <item name="android:textColor">#130E1E</item>
     </style>
