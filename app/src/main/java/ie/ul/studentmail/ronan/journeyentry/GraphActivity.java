@@ -1,5 +1,6 @@
 package ie.ul.studentmail.ronan.journeyentry;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -13,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.room.Room;
 
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -26,10 +28,29 @@ public class GraphActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        GraphView graph = (GraphView) findViewById(R.id.stepGraph);
-        LineGraphSeries series1 = new LineGraphSeries<>(generateData(1));
-        graph.addSeries(series1);
+        GraphView graphStep = findViewById(R.id.stepGraph);
+        LineGraphSeries stepSeries = new LineGraphSeries<>(generateData(1));
+        stepSeries.setTitle("Step Log");
+        stepSeries.setColor(Color.BLUE);
+        stepSeries.setDrawDataPoints(true);
+        stepSeries.setDataPointsRadius(10);
+        stepSeries.setThickness(8);
+        graphStep.addSeries(stepSeries);
 
+        TextView highStep = findViewById(R.id.highStep);
+        highStep.setText("Highest Steps Taken: " + stepSeries.getHighestValueY());
+
+        GraphView graphDist = findViewById(R.id.distGraph);
+        LineGraphSeries distSeries = new LineGraphSeries<>(generateData(2));
+        stepSeries.setTitle("Distance Log");
+        distSeries.setColor(Color.BLUE);
+        distSeries.setDrawDataPoints(true);
+        distSeries.setDataPointsRadius(10);
+        distSeries.setThickness(8);
+        graphDist.addSeries(distSeries);
+
+        TextView highDist = findViewById(R.id.highDist);
+        highDist.setText("Highest Distance: " + String.format("%.2f km", distSeries.getHighestValueY()));
     }
 
     private DataPoint[] generateData(int type) {
@@ -42,6 +63,13 @@ public class GraphActivity extends AppCompatActivity {
         if(type == 1) {
             for (int i = 0; i < journeyList.size(); i++) {
                 DataPoint v = new DataPoint(i, journeyList.get(i).getSteps());
+                values[i] = v;
+            }
+        }
+
+        if(type == 2) {
+            for (int i = 0; i < journeyList.size(); i++) {
+                DataPoint v = new DataPoint(i, journeyList.get(i).getDistance());
                 values[i] = v;
             }
         }

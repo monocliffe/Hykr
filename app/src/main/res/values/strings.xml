@@ -21,5 +21,9 @@
     <string name="view_map">View Map</string>
     <string name="title_activity_graph">Statistics</string>
     <string name="view_graph">Graphs</string>
+    <string name="stepTitle">Steps Journal</string>
+    <string name="highestStep">666</string>
+    <string name="distTitle">Distance Journal</string>
+    <string name="highestDist">777</string>
 
 </resources>

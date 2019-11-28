@@ -35,14 +35,53 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/stepTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/stepTitle"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/highStep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/highestStep"
+                android:textSize="24sp" />
 
             <com.jjoe64.graphview.GraphView
                 android:id="@+id/stepGraph"
                 android:layout_width="match_parent"
                 android:layout_height="200dip" />
+
+            <TextView
+                android:id="@+id/distTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/distTitle"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/highDist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/highestDist"
+                android:textSize="24sp" />
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/distGraph"
+                android:layout_width="match_parent"
+                android:layout_height="200dip" />
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
