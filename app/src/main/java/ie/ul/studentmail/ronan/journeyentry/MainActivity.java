@@ -107,6 +107,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
+        final Button viewGraphButton = findViewById(R.id.view_graph_button);
+        viewGraphButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                Intent intent = new Intent(MainActivity.this, GraphActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         //This is a test to determine if step sensor is on phone
 //        PackageManager pm = getPackageManager();

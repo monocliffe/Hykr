@@ -47,6 +47,7 @@ dependencies {
 
     // UI
     //implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation 'com.jjoe64:graphview:4.2.2'
 
     // Testing
     //androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
