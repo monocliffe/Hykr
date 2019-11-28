@@ -25,62 +25,92 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/graphList"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="65dp"
-            android:layout_marginEnd="5dp"
-            android:orientation="vertical"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="55dp"
+            android:clipToPadding="true"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/stepTitle"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/graphList"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/stepTitle"
-                android:textAlignment="center"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/highStep"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/highestStep"
-                android:textSize="24sp" />
+                <TextView
+                    android:id="@+id/totalJourney"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/totalJourney"
+                    android:textSize="24sp" />
 
-            <com.jjoe64.graphview.GraphView
-                android:id="@+id/stepGraph"
-                android:layout_width="match_parent"
-                android:layout_height="200dip" />
+                <TextView
+                    android:id="@+id/totalDist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/totalDist"
+                    android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/distTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/distTitle"
-                android:textAlignment="center"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/totalSteps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/totalSteps"
+                    android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/highDist"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/highestDist"
-                android:textSize="24sp" />
+                <TextView
+                    android:id="@+id/stepTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stepTitle"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
 
-            <com.jjoe64.graphview.GraphView
-                android:id="@+id/distGraph"
-                android:layout_width="match_parent"
-                android:layout_height="200dip" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/highStep"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/highestStep"
+                    android:textSize="24sp" />
+
+                <com.jjoe64.graphview.GraphView
+                    android:id="@+id/stepGraph"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dip" />
+
+                <TextView
+                    android:id="@+id/distTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/distTitle"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/highDist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/highestDist"
+                    android:textSize="24sp" />
+
+                <com.jjoe64.graphview.GraphView
+                    android:id="@+id/distGraph"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dip" />
+
+            </LinearLayout>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
