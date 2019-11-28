@@ -5,7 +5,7 @@
     <string name="begin_button">Begin Journey</string>
     <string name="end_journey">End Journey</string>
     <string name="steps">Steps</string>
-    <string name="distance">Distance</string>"
+    <string name="stepDistance">Distance</string>"
     <string name="start_date_time">Start Date/Time</string>
     <string name="end_date_time">End Date/Time</string>
     <string name="enter_button">Enter</string>
@@ -28,5 +28,16 @@
     <string name="totalJourney">Number of Journeys: </string>
     <string name="totalSteps">Total Steps: </string>
     <string name="totalDist">Total Distance: </string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="night_mode">Night Mode</string>
+    <string name="do_not_enter">Do Not Enter</string>
+    <string name="title_activity_view_journey_info">ViewJourneyInfo</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_maps_fragment">Map</string>
 
 </resources>
