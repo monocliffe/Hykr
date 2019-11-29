@@ -51,11 +51,8 @@ public class JourneyEntryConfirm extends AppCompatActivity {
             }
         }
 
-
-
-
         viewText=findViewById(R.id.stepsText);
-        viewText.setText("Steps" + stepCount);
+        viewText.setText("Steps: " + stepCount);
 
         viewText=findViewById(R.id.distanceText);
         viewText.setText(String.format("Step Distance: %.2f km", distance));
@@ -65,8 +62,6 @@ public class JourneyEntryConfirm extends AppCompatActivity {
 
         viewText = findViewById(R.id.endDateTimeText);
         viewText.setText("Untill: " + journeyEndInfo);
-
-
 
     }
 

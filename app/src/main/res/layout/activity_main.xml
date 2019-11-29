@@ -37,8 +37,6 @@
 
 
     <Button
-<<<<<<< HEAD
-=======
         android:id="@+id/begin_journey_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,7 +55,6 @@
         app:layout_constraintVertical_bias="0.59" />
 
     <Button
->>>>>>> splashScreen
         android:id="@+id/end_journey_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,23 +74,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.714" />
 
-    <Button
-        android:id="@+id/view_journey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/custom_button"
-        android:gravity="center"
-        android:onClick="viewJourneysClicked"
-        android:text="@string/view_journeys"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stepReadout"
-        app:layout_constraintVertical_bias="0.857" />
 
-<<<<<<< HEAD
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="0dp"
         android:layout_height="55dp"
@@ -113,17 +94,16 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorB"
-                android:text="@string/view_graph"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:onClick="viewGraphClicked"
+                android:background="@drawable/custom_button"
+                android:text="@string/view_graph" />
 
             <View
                 android:id="@+id/divider"
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".005"
-                android:background="#000000" />
+                android:background="@color/colorPrimaryDark" />
 
             <Button
                 android:id="@+id/view_map_button"
@@ -131,17 +111,22 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorB"
+                android:background="@drawable/custom_button"
+                android:onClick="viewMapClicked"
                 android:text="@string/view_map"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintVertical_bias="0.686" />
 
             <View
                 android:id="@+id/divider2"
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.005"
-                android:background="#000000" />
+                android:background="@color/colorPrimaryDark" />
 
             <Button
                 android:id="@+id/view_journey"
@@ -149,27 +134,19 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorB"
-                android:text="@string/view_journey"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:background="@drawable/custom_button"
+                android:gravity="center"
+                android:onClick="viewJourneysClicked"
+                android:text="@string/view_journeys"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stepReadout"
+                app:layout_constraintVertical_bias="0.857" />
         </LinearLayout>
     </com.google.android.material.bottomnavigation.BottomNavigationView>
-=======
-    <Button
-        android:id="@+id/view_map_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:background="@drawable/custom_button"
-        android:onClick="viewMapClicked"
-        android:text="@string/view_map"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/begin_journey_button"
-        app:layout_constraintVertical_bias="0.686" />
+
 
     <ImageButton
         android:id="@+id/preferences"
@@ -187,6 +164,4 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@android:drawable/ic_menu_preferences" />
 
-
->>>>>>> splashScreen
 </androidx.constraintlayout.widget.ConstraintLayout>

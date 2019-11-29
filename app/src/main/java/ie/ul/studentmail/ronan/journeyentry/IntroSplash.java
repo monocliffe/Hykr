@@ -18,6 +18,7 @@ public class IntroSplash extends AppCompatActivity {
     VideoView videoHolder;
     DisplayMetrics metrics;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

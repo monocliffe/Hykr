@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="ie.ul.studentmail.ronan.journeyentry">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -18,13 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-<<<<<<< HEAD
-        <activity
-            android:name=".GraphActivity"
-            android:label="@string/title_activity_graph"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-=======
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -34,16 +26,14 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
->>>>>>> splashScreen
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-<<<<<<< HEAD
-=======
+        <activity
+            android:name=".GraphActivity" />
         <activity android:name=".ViewJourneyInfo" />
         <activity android:name=".OptionsActivity" />
->>>>>>> splashScreen
         <activity android:name=".MapActivity" />
         <activity android:name=".ViewJourneys" />
         <activity android:name=".JourneyEntryConfirm" />
@@ -55,23 +45,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--              The API key for Google Maps-based APIs. -->
-        <uses-library
-            android:name="org.apache.http.legacy"
-            android:required="false" />
 
         <meta-data
-<<<<<<< HEAD
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-=======
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
->>>>>>> splashScreen
     </application>
 
 </manifest>

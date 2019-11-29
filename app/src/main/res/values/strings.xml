@@ -9,7 +9,7 @@
     <string name="start_date_time">Start Date/Time</string>
     <string name="end_date_time">End Date/Time</string>
     <string name="enter_button">Enter</string>
-    <string name="view_journey">Journeys</string>
+    <string name="view_journey">View Journey</string>
     <string name="stepTv">Steps</string>
     <string name="initial_counter_value">0</string>
     <string name="view_journeys">View Journeys</string>
@@ -19,15 +19,6 @@
     <string name="option_get_place">Get place</string>
     <string name="pick_place">Choose a place</string>
     <string name="view_map">View Map</string>
-    <string name="title_activity_graph">Statistics</string>
-    <string name="view_graph">Graphs</string>
-    <string name="stepTitle">Steps Journal</string>
-    <string name="highestStep">666</string>
-    <string name="distTitle">Distance Journal</string>
-    <string name="highestDist">777</string>
-    <string name="totalJourney">Number of Journeys: </string>
-    <string name="totalSteps">Total Steps: </string>
-    <string name="totalDist">Total Distance: </string>
 
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
@@ -39,5 +30,16 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_maps_fragment">Map</string>
+
+    <string name="title_activity_graph">Statistics</string>
+    <string name="view_graph">Graphs</string>
+    <string name="stepTitle">Steps Journal</string>
+    <string name="highestStep">666</string>
+    <string name="distTitle">Distance Journal</string>
+    <string name="highestDist">777</string>
+    <string name="totalJourney">Number of Journeys: </string>
+    <string name="totalSteps">Total Steps: </string>
+    <string name="totalDist">Total Distance: </string>
+
 
 </resources>
