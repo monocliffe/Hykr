@@ -8,17 +8,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class JourneyViewHolder extends RecyclerView.ViewHolder {
 
-    public static final int MULTI_SELECTION = 2;
+    private static final int MULTI_SELECTION = 2;
     public static final int SINGLE_SELECTION = 1;
     CheckedTextView textView;
     SelectableJourney mJourney;
-    OnItemSelectedListener itemSelectedListener;
+    private OnItemSelectedListener itemSelectedListener;
 
 
-    public JourneyViewHolder(View view, OnItemSelectedListener listener) {
+    JourneyViewHolder(View view, OnItemSelectedListener listener) {
         super(view);
         itemSelectedListener = listener;
-        textView = (CheckedTextView) view.findViewById(R.id.checked_text_item);
+        textView = view.findViewById(R.id.checked_text_item);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,7 +34,7 @@ public class JourneyViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void setChecked(boolean value) {
+    void setChecked(boolean value) {
         if (value) {
             textView.setBackgroundColor(Color.LTGRAY);
         } else {

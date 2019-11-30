@@ -40,6 +40,10 @@
     <string name="totalJourney">Number of Journeys: </string>
     <string name="totalSteps">Total Steps: </string>
     <string name="totalDist">Total Distance: </string>
+    <string name="longest_distance">Longest Distance:</string>
+    <string name="textview">TextView</string>
+    <string name="button">Button</string>
+    <string name="not_available">0</string>
 
 
 </resources>

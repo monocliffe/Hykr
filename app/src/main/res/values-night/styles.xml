@@ -5,8 +5,8 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#130E1E</item>
         <item name="colorPrimaryDark">#008ebd</item>
-        <item name="colorAccent">#ffffff</item>
-        <item name="android:textColor">#ffffff</item>
+        <item name="colorAccent">#90cdd1</item>
+        <item name="android:textColor">#d8e7e8</item>
     </style>
 
     <style name="MyTheme" parent="Theme.AppCompat.DayNight">

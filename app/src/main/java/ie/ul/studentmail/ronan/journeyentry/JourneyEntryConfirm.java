@@ -73,8 +73,6 @@ public class JourneyEntryConfirm extends AppCompatActivity {
         if(journeyInfo[7].length()==0)
             journeyInfo[7]="Untitled";
 
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!"+journeyInfo[7]);
-
         Journey journey = new Journey(journeyInfo[7],
                                       steps,
                                       String.format("%.2f km", distance),

@@ -174,7 +174,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
 
         // Prompt the user for permission.
-        getLocationPermission();
+        //getLocationPermission();
 
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI();

@@ -21,7 +21,6 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.google.android.gms.common.ConnectionResult;
@@ -38,7 +37,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                                                LocationListener{
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private static final int PERMISSIONS_REQUEST_ACTIVITY_RECOGNITION = 1;
     private boolean mLocationPermissionGranted;
+    private boolean mActivityPermissionGranted;
 
     SharedPreferences sharedpreferences;
     public static final String BUTTON_STATE_DAY = "Button_State_Day";
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     LocalDateTime journeyEndTime;
     boolean appRunning = false;
 
+
     int count = 0;
 
     Location location;
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     SensorManager sensorManager;
 
     private BasicStepDetector simpleStepDetector;
-    private Sensor accel;
+   // private Sensor accelSensor;
 
     TextView itJustSaysSteps;
     TextView stepData;
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //The ofPattern method below requires api 26 or higher!
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-    final int PERMISSIONS_REQUEST_ACTIVITY_RECOGNITION = 1;
+
 
 
     @Override
@@ -76,20 +78,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         //Shared preferences are used to retrieve the previous light/dark mode settings
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        Boolean lastDayButtonState = sharedpreferences.getBoolean(BUTTON_STATE_DAY, false);
+        boolean lastDayButtonState = sharedpreferences.getBoolean(BUTTON_STATE_DAY, false);
         if(lastDayButtonState)
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         else
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         setContentView(R.layout.activity_main);
-        getActivityPermission();
+
+        getLocationPermission();
 
         stepData = findViewById(R.id.stepReadout);
         itJustSaysSteps =  findViewById(R.id.justTheWordSteps);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
-        getLocationPermission();
+
         googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
 
 
@@ -107,10 +110,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void beginJourneyClicked(View v){
-        location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        if(location!=null){
-            startLat = String.valueOf(location.getLatitude());
-            startLong = String.valueOf(location.getLongitude());
+        //getActivityPermission();
+        if(mLocationPermissionGranted) {
+            location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+            System.out.println(location);
+            if (location != null) {
+                startLat = String.valueOf(location.getLatitude());
+                startLong = String.valueOf(location.getLongitude());
+            }
+        }else{
+            startLat=getString(R.string.not_available);
+            startLong=getString(R.string.not_available);
         }
         stepData.setText("0");
         count = 0;
@@ -122,10 +132,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void endJourneyClicked(View v){
-        location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        if(location!=null){
-            endLat = String.valueOf(location.getLatitude());
-            endLong = String.valueOf(location.getLongitude());
+        if(mLocationPermissionGranted) {
+            location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!");
+            if (location != null) {
+                endLat = String.valueOf(location.getLatitude());
+                endLong = String.valueOf(location.getLongitude());
+            }
+        }else{
+            endLat=getString(R.string.not_available);
+            endLong=getString(R.string.not_available);
         }
         Intent intent = new Intent(MainActivity.this, JourneyEntryConfirm.class);
         journeyEndTime = LocalDateTime.now();
@@ -137,9 +153,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         journeyBundle.putStringArray("journey_info", journeyInfoArray);
         intent.putExtras(journeyBundle);
         startActivity(intent);
-
-
-
     }
 
     public void viewJourneysClicked(View v){
@@ -149,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     public void viewMapClicked(View v){
         Intent intent = new Intent(MainActivity.this, MapActivity.class);
+        //intent.putExtra("loc_permission",mLocationPermissionGranted);
         startActivity(intent);
     }
 
@@ -163,34 +177,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     */
     @Override
-    //fragment!!!!! Look into this!!!
     protected void onResume() {
-//        super.onResume();
-//        Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-//
-//        if(countSensor!=null){
-//            sensorManager.registerListener(this, countSensor, 2); //Type 2 is delay_ui
-//
-//        }else{
-//            //Toast.makeText(this, "Sorry, no sensor found!", Toast.LENGTH_SHORT).show();
-//        }
 
         super.onResume();
         Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
 
+        //If step_detector present use it.
         if(countSensor!=null){
             sensorManager.registerListener(this, countSensor, 2); //Type 2 is delay_ui
 
-        }else{
-            Toast.makeText(this, "Sorry, no STEP_DETECTOR found!\nUsing Accelerometer instead.\nResults may be inaccurate!", Toast.LENGTH_SHORT).show();
-            accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        }
+        //Else use accelerometer
+        else {
+            //Toast.makeText(this, "Sorry, no STEP_DETECTOR found!\nUsing Accelerometer instead.\nResults may be inaccurate!", Toast.LENGTH_SHORT).show();
+
+            Sensor accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             simpleStepDetector = new BasicStepDetector();
             simpleStepDetector.registerListener(this);
-            sensorManager.registerListener(MainActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
+            sensorManager.registerListener(MainActivity.this, accelSensor, SensorManager.SENSOR_DELAY_FASTEST);
         }
-
-
-
     }
 
     @Override
@@ -205,14 +210,26 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
 
-        //if(appRunning){
-            if(sensorEvent.values[0] == (float) 1.0){
-                count++;
-                stepData.setText(Integer.toString(count));
-            }
-            //stepData.setText(String.valueOf(sensorEvent.values[0]));
-            //Toast.makeText(this, "Something happened: " + String.valueOf(sensorEvent.values[0]), Toast.LENGTH_SHORT).show();
-        //}
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            simpleStepDetector.updateAccel(
+                    sensorEvent.timestamp, sensorEvent.values[0], sensorEvent.values[1], sensorEvent.values[2]);
+
+        } else if(sensorEvent.values[0] == (float) 1.0){
+            count++;
+            stepData.setText(Integer.toString(count));
+        }
+
+
+
+//        //if(appRunning){
+//            if(sensorEvent.values[0] == (float) 1.0){
+//                count++;
+//                stepData.setText(String.valueOf(count));
+////                stepData.setText(Integer.toString(count));
+//            }
+//            //stepData.setText(String.valueOf(sensorEvent.values[0]));
+//            //Toast.makeText(this, "Something happened: " + String.valueOf(sensorEvent.values[0]), Toast.LENGTH_SHORT).show();
+//        //}
     }
 
     @Override
@@ -220,14 +237,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+
+
     //in api 29 permission needs to be requested in order to access activity recognition
     //this is required to use the TYPE_STEP_COUNTER
     private void getActivityPermission() {
 
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                Manifest.permission.ACTIVITY_RECOGNITION)
+                android.Manifest.permission.ACTIVITY_RECOGNITION)
                 == PackageManager.PERMISSION_GRANTED) {
-
+            mActivityPermissionGranted = true;
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACTIVITY_RECOGNITION},
@@ -235,10 +254,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    /*
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    Permission Requests
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    */
 
-    /**
-     * Prompts the user for permission to use the device location.
-     */
     private void getLocationPermission() {
         /*
          * Request location permission, so that we can get the location of the
@@ -264,16 +285,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         mLocationPermissionGranted = false;
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mLocationPermissionGranted = true;
-                }
+//        switch (requestCode) {
+//            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+        if(requestCode==PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION){
+            // If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mLocationPermissionGranted = true;
             }
         }
-//        updateLocationUI();
     }
 
 
@@ -334,130 +354,3 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 }
 
-
-/*
-    <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="@color/colorPrimaryDark"
-        android:orientation="vertical"
-        tools:context=".MainActivity">
-
-<TextView
-        android:id="@+id/justTheWordSteps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="84dp"
-                android:gravity="center"
-                android:text="@string/stepTv"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-<TextView
-        android:id="@+id/stepReadout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="64sp"
-                android:gravity="center"
-                android:text="@string/initial_counter_value"
-                android:textSize="120sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/justTheWordSteps"
-                app:layout_constraintVertical_bias="0.0" />
-
-
-<Button
-        android:id="@+id/begin_journey_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
-                android:layout_weight="1"
-                android:background="@drawable/custom_button"
-                android:gravity="center"
-                android:onClick="beginJourneyClicked"
-                android:text="@string/begin_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.59" />
-
-<Button
-        android:id="@+id/end_journey_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
-                android:layout_weight="1"
-                android:background="@drawable/custom_button"
-                android:gravity="center"
-                android:onClick="endJourneyClicked"
-                android:text="@string/end_journey"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.714" />
-
-<Button
-        android:id="@+id/view_journey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/custom_button"
-                android:gravity="center"
-                android:onClick="viewJourneysClicked"
-                android:text="@string/view_journeys"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/stepReadout"
-                app:layout_constraintVertical_bias="0.857" />
-
-<Button
-        android:id="@+id/view_map_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:background="@drawable/custom_button"
-                android:onClick="viewMapClicked"
-                android:text="@string/view_map"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/begin_journey_button"
-                app:layout_constraintVertical_bias="0.686" />
-
-<ImageButton
-        android:id="@+id/preferences"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:onClick="onPreferencesClicked"
-                android:background="@drawable/custom_button2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@android:drawable/ic_menu_preferences" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>*/

@@ -8,6 +8,7 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
     <application
         android:allowBackup="true"
@@ -28,10 +29,9 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyDYfCWQU0OD52KGe-hyDUUJNovjcFASctw" />
 
-        <activity
-            android:name=".GraphActivity" />
+        <activity android:name=".GraphActivity" />
         <activity android:name=".ViewJourneyInfo" />
         <activity android:name=".OptionsActivity" />
         <activity android:name=".MapActivity" />

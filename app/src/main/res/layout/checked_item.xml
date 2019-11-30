@@ -3,13 +3,13 @@
     android:id="@+id/checked_text_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="32dp"
+    android:paddingStart="32dp"
     android:gravity="center_vertical"
     android:textStyle="bold"
     android:textSize="18sp"
     android:checkMark="?android:attr/listChoiceIndicatorSingle"
     android:paddingTop="16dp"
-    android:paddingRight="16dp"
+    android:paddingEnd="16dp"
     android:checkMarkTint="@color/colorPrimary"
     android:paddingBottom="16dp">
 

@@ -120,6 +120,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Locale;
 
 public class GraphActivity extends AppCompatActivity {
     private JourneyDataBase jDB;
@@ -157,7 +158,7 @@ public class GraphActivity extends AppCompatActivity {
                 int steps = journeyList.get((int) dataPoint.getX()).getSteps();
                 double dist = journeyList.get((int) dataPoint.getX()).getDistance();
                 String[] date = journeyList.get((int) dataPoint.getX()).getJourneyEnd().split(" ");
-                String output = "Steps: " + steps + "\nDistance: " + String.format("%.2f km", dist) + "\nDate: " + date[0];
+                String output = "Steps: " + steps + "\nDistance: " + String.format(Locale.US,"%.2f km", dist) + "\nDate: " + date[0];
 
                 Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT).show();
             }
@@ -174,7 +175,8 @@ public class GraphActivity extends AppCompatActivity {
         stepSeries.setOnDataPointTapListener(tapListen);
 
         TextView highStep = findViewById(R.id.highStep);
-        highStep.setText("Highest Steps Taken: " + stepSeries.getHighestValueY());
+        String holder = "Highest Steps Taken: " + stepSeries.getHighestValueY();
+        highStep.setText(holder);
 
         GraphView graphDist = findViewById(R.id.distGraph);
         LineGraphSeries distSeries = new LineGraphSeries<>(generateData(2));
@@ -187,16 +189,20 @@ public class GraphActivity extends AppCompatActivity {
         distSeries.setOnDataPointTapListener(tapListen);
 
         TextView highDist = findViewById(R.id.highDist);
-        highDist.setText("Highest Distance: " + String.format("%.2f km", distSeries.getHighestValueY()));
+        holder = R.string.longest_distance + String.format(Locale.US,"%.2f km", distSeries.getHighestValueY());
+        highDist.setText(holder);
 
         TextView totalDistView = findViewById(R.id.totalDist);
-        totalDistView.setText(getString(R.string.totalDist) + " " + String.format("%.2f km",totalDist));
+        holder = getString(R.string.totalDist) + " " + String.format(Locale.UK,"%.2f km",totalDist);
+        totalDistView.setText(holder);
 
         TextView totalStepView = findViewById(R.id.totalSteps);
-        totalStepView.setText(getString(R.string.totalSteps) + " " + totalSteps);
+        holder = getString(R.string.totalSteps) + " " + totalSteps;
+        totalStepView.setText(holder);
 
         TextView totalJourneyView = findViewById(R.id.totalJourney);
-        totalJourneyView.setText(getString(R.string.totalJourney) + " " + totalJourneys);
+        holder = getString(R.string.totalJourney) + " " + totalJourneys;
+        totalJourneyView.setText(holder);
     }
 
     private DataPoint[] generateData(int type) {
