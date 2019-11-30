@@ -23,5 +23,8 @@ public interface JourneyDAO {
     @Query("select * from journeys")
     public List<Journey> getJourneys();
 
+    @Query("DELETE FROM journeys")
+    void delete();
+
 
 }

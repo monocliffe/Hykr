@@ -20,7 +20,9 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.gms.common.ConnectionResult;
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final int PERMISSIONS_REQUEST_ACTIVITY_RECOGNITION = 1;
     private boolean mLocationPermissionGranted;
-    private boolean mActivityPermissionGranted;
+
 
     SharedPreferences sharedpreferences;
     public static final String BUTTON_STATE_DAY = "Button_State_Day";
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //The ofPattern method below requires api 26 or higher!
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
+    Button endButton;
 
 
     @Override
@@ -88,14 +91,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         getLocationPermission();
 
+        endButton = findViewById(R.id.end_journey_button);
+        endButton.setEnabled(false);
+        endButton.setAlpha(.5f);
+
         stepData = findViewById(R.id.stepReadout);
         itJustSaysSteps =  findViewById(R.id.justTheWordSteps);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
-
         googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
-
-
     }
 
 
@@ -111,9 +114,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     public void beginJourneyClicked(View v){
         //getActivityPermission();
+        endButton.setEnabled(true);
+        endButton.setAlpha(1.0f);
         if(mLocationPermissionGranted) {
             location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-            System.out.println(location);
             if (location != null) {
                 startLat = String.valueOf(location.getLatitude());
                 startLong = String.valueOf(location.getLongitude());
@@ -129,12 +133,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         journeyInfoArray[1] = journeyStartTime.format(formatter);
         journeyInfoArray[3] = startLat;
         journeyInfoArray[4] = startLong;
+
     }
 
     public void endJourneyClicked(View v){
         if(mLocationPermissionGranted) {
             location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!");
             if (location != null) {
                 endLat = String.valueOf(location.getLatitude());
                 endLong = String.valueOf(location.getLongitude());
@@ -189,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
         //Else use accelerometer
         else {
-            //Toast.makeText(this, "Sorry, no STEP_DETECTOR found!\nUsing Accelerometer instead.\nResults may be inaccurate!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Sorry, no STEP_DETECTOR found!\nUsing Accelerometer instead.\nResults may be inaccurate!", Toast.LENGTH_SHORT).show();
 
             Sensor accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             simpleStepDetector = new BasicStepDetector();
@@ -218,24 +222,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             count++;
             stepData.setText(Integer.toString(count));
         }
-
-
-
-//        //if(appRunning){
-//            if(sensorEvent.values[0] == (float) 1.0){
-//                count++;
-//                stepData.setText(String.valueOf(count));
-////                stepData.setText(Integer.toString(count));
-//            }
-//            //stepData.setText(String.valueOf(sensorEvent.values[0]));
-//            //Toast.makeText(this, "Something happened: " + String.valueOf(sensorEvent.values[0]), Toast.LENGTH_SHORT).show();
-//        //}
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
+
 
 
 
@@ -246,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACTIVITY_RECOGNITION)
                 == PackageManager.PERMISSION_GRANTED) {
-            mActivityPermissionGranted = true;
+
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACTIVITY_RECOGNITION},
@@ -285,8 +278,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         mLocationPermissionGranted = false;
-//        switch (requestCode) {
-//            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
         if(requestCode==PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION){
             // If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0
@@ -296,6 +287,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    @Override
+    public void step(long timeNs) {
+        count++;
+        stepData.setText(Integer.toString(count));
+    }
 
     @Override
     protected void onStart() {
@@ -348,9 +344,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
-    @Override
-    public void step(long timeNs) {
 
-    }
 }
 

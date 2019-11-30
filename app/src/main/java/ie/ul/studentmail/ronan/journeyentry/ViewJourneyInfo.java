@@ -1,11 +1,14 @@
 package ie.ul.studentmail.ronan.journeyentry;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.List;
 
 public class ViewJourneyInfo extends AppCompatActivity {
 
@@ -14,10 +17,14 @@ public class ViewJourneyInfo extends AppCompatActivity {
     String journeyReadout;
     String[] startTimeInfo;
     String[] endTimeInfo;
+    JourneyDataBase jDB;
+    List<Journey> journeyList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_journey_info);
+        //hide the title bar
+        getSupportActionBar().hide();
 
         recieverBundle = this.getIntent().getExtras();
         if(recieverBundle.getStringArray("journey_info") != null) {
@@ -52,16 +59,5 @@ public class ViewJourneyInfo extends AppCompatActivity {
 
     }
 
-    public void onClickButtonMap(View v){
-        double[] coords = new double[4];
-        coords[0] = Double.parseDouble(journeyInfo[5]);
-        coords[1] = Double.parseDouble(journeyInfo[6]);
-        coords[2] = Double.parseDouble(journeyInfo[7]);
-        coords[3] = Double.parseDouble(journeyInfo[8]);
 
-        //Intent intent = new Intent(ViewJourneyInfo.this, MapsActivityFragment.class);
-        //intent.putExtra("coord_data", coords);
-        //startActivity(intent);
-
-    }
 }

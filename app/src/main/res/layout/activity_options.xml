@@ -9,8 +9,8 @@
 
     <RadioGroup
         android:id="@+id/radio_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="123dp"
+        android:layout_height="106dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,19 +19,32 @@
         <RadioButton
             android:id="@+id/day_mode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Day Mode"
+            android:layout_height="53dp"
+            android:text="@string/light_mode"
             tools:layout_editor_absoluteX="50dp"
             tools:layout_editor_absoluteY="237dp" />
 
         <RadioButton
-        android:id="@+id/night_mode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Night Mode"
-        tools:layout_editor_absoluteX="50dp"
-        tools:layout_editor_absoluteY="291dp" />
+            android:id="@+id/night_mode"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:text="@string/dark_mode"
+            tools:layout_editor_absoluteX="50dp"
+            tools:layout_editor_absoluteY="291dp" />
     </RadioGroup>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_all_journeys"
+        android:onClick="onClickDeleteAll"
+        app:layout_constraintBottom_toTopOf="@+id/radio_group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.173"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.132" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

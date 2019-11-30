@@ -32,7 +32,7 @@ public class JourneyEntryConfirm extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journey_entry);
-
+        getSupportActionBar().hide(); //hide the title bar
         //create a database instance
         jDB = Room.databaseBuilder(getApplicationContext(),JourneyDataBase.class,"JourneyDatabase").allowMainThreadQueries().build();
 

@@ -37,13 +37,17 @@
     <string name="highestStep">666</string>
     <string name="distTitle">Distance Journal</string>
     <string name="highestDist">777</string>
-    <string name="totalJourney">Number of Journeys: </string>
+    <string name="totalJourney">Journeys: </string>
     <string name="totalSteps">Total Steps: </string>
     <string name="totalDist">Total Distance: </string>
-    <string name="longest_distance">Longest Distance:</string>
+    <string name="longest_distance">Longest: </string>
     <string name="textview">TextView</string>
     <string name="button">Button</string>
     <string name="not_available">0</string>
+    <string name="most_steps_taken">Most Steps: </string>
+    <string name="light_mode">Light Mode</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="delete_all_journeys">Delete All Journeys</string>
 
 
 </resources>

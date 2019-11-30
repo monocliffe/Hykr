@@ -25,7 +25,7 @@ public class ViewJourneys extends AppCompatActivity implements JourneyViewHolder
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_journeys);
 
-
+        getSupportActionBar().hide(); //hide the title bar
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(ViewJourneys.this);
         recyclerView = findViewById(R.id.journey_recycler_view);
@@ -54,8 +54,6 @@ public class ViewJourneys extends AppCompatActivity implements JourneyViewHolder
     public void onItemSelected(SelectableJourney selectableItem) {
         String[] journeyInfo;
         List<Journey> selectedItems = adapter.getSelectedItems();
-        Snackbar.make(recyclerView,"Selected item is "+selectableItem.getJourneyStart()+
-                ", Total selected item count is "+selectedItems.size(),Snackbar.LENGTH_LONG).show();
 
 
         journeyInfo=selectableItem.toString().split(",");

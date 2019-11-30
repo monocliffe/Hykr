@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 
 @Entity(tableName = "journeys")
@@ -158,7 +159,7 @@ public class Journey {
     public String toString(){
 
         return name+","+steps+","+stepDistance+","+journeyStart+","+journeyEnd+","+
-                      startLat+","+startLong+","+endLat+","+endLong+","+String.format("%.2f km", distance);
+                      startLat+","+startLong+","+endLat+","+endLong+","+String.format(Locale.UK,"%.2f km", distance) + "," + id;
 
     }
 
