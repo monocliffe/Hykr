@@ -17,8 +17,11 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
-import android.location.LocationListener;
+//import android.location.LocationListener;
+import com.google.android.gms.location.LocationListener;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,10 +30,24 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
+import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener,
                                                                BasicStepListener,
@@ -52,27 +69,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     LocalDateTime journeyStartTime;
     LocalDateTime journeyEndTime;
     boolean appRunning = false;
-
+    private Location mLastKnownLocation;
 
     int count = 0;
 
-    Location location;
     GoogleApiClient googleApiClient;
     Bundle journeyBundle = new Bundle();
     SensorManager sensorManager;
 
     private BasicStepDetector simpleStepDetector;
-   // private Sensor accelSensor;
 
     TextView itJustSaysSteps;
     TextView stepData;
-
 
     //The ofPattern method below requires api 26 or higher!
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     Button endButton;
 
+    LocationRequest mLocationRequest;
+
+    private FusedLocationProviderClient mFusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +108,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         getLocationPermission();
 
+        //mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        startLocationUpdates();
+
+        //getDeviceLocation();
+
+        //this is to disable end journey untill begin journey has been pressed
         endButton = findViewById(R.id.end_journey_button);
         endButton.setEnabled(false);
         endButton.setAlpha(.5f);
@@ -100,6 +124,58 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
     }
+
+
+
+
+    protected void startLocationUpdates() {
+
+        // Create the location request to start receiving updates
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
+
+        // Create LocationSettingsRequest object using location request
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(mLocationRequest);
+        LocationSettingsRequest locationSettingsRequest = builder.build();
+
+        // Check whether location settings are satisfied
+        // https://developers.google.com/android/reference/com/google/android/gms/location/SettingsClient
+        SettingsClient settingsClient = LocationServices.getSettingsClient(this);
+        settingsClient.checkLocationSettings(locationSettingsRequest);
+
+        // new Google API SDK v11 uses getFusedLocationProviderClient(this)
+        getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, new LocationCallback() {
+                    @Override
+                    public void onLocationResult(LocationResult locationResult) {
+                        // do work here
+                        onLocationChanged(locationResult.getLastLocation());
+                    }
+                },
+                Looper.myLooper());
+    }
+
+    public void onLocationChanged(Location location) {
+        // New location has now been determined
+        String msg = "Updated Location: " +
+                Double.toString(location.getLatitude()) + "," +
+                Double.toString(location.getLongitude());
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        mLastKnownLocation = location;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
     /*
@@ -116,16 +192,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //getActivityPermission();
         endButton.setEnabled(true);
         endButton.setAlpha(1.0f);
-        if(mLocationPermissionGranted) {
-            location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-            if (location != null) {
-                startLat = String.valueOf(location.getLatitude());
-                startLong = String.valueOf(location.getLongitude());
-            }
-        }else{
-            startLat=getString(R.string.not_available);
-            startLong=getString(R.string.not_available);
-        }
+//        String[] lngLat = getLocation();
+//        startLat=lngLat[0];
+//        startLong=lngLat[1];
+        //getDeviceLocation();
+        startLat=String.valueOf(mLastKnownLocation.getLatitude());
+        startLong=String.valueOf(mLastKnownLocation.getLongitude());
         stepData.setText("0");
         count = 0;
         journeyStartTime = LocalDateTime.now();
@@ -137,16 +209,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void endJourneyClicked(View v){
-        if(mLocationPermissionGranted) {
-            location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-            if (location != null) {
-                endLat = String.valueOf(location.getLatitude());
-                endLong = String.valueOf(location.getLongitude());
-            }
-        }else{
-            endLat=getString(R.string.not_available);
-            endLong=getString(R.string.not_available);
-        }
+//        String[] lngLat = getLocation();
+//        endLat=lngLat[0];
+//        endLong=lngLat[1];
+
+//        getDeviceLocation();
+        endLat=String.valueOf(mLastKnownLocation.getLatitude());
+        endLong=String.valueOf(mLastKnownLocation.getLongitude());
+
         Intent intent = new Intent(MainActivity.this, JourneyEntryConfirm.class);
         journeyEndTime = LocalDateTime.now();
         journeyInfoArray[0] = Integer.toString(count);
@@ -252,7 +322,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     Permission Requests
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     */
-
     private void getLocationPermission() {
         /*
          * Request location permission, so that we can get the location of the
@@ -270,9 +339,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-    /**
-     * Handles the result of the request for location permissions.
-     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
@@ -287,11 +353,36 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+
     @Override
     public void step(long timeNs) {
         count++;
         stepData.setText(Integer.toString(count));
     }
+
+//    public String[] getLocation(){
+//        String[] retVals = new String[2];
+//        String lat,lng;
+//        if(mLocationPermissionGranted) {
+//            Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+//            if (location != null) {
+//                lat = String.valueOf(location.getLatitude());
+//                lng = String.valueOf(location.getLongitude());
+//                //System.out.println(endLat);
+//            }else{
+//                lat=getString(R.string.not_available);
+//                lng=getString(R.string.not_available);
+//            }
+//
+//        }else{
+//            lat=getString(R.string.not_available);
+//            lng=getString(R.string.not_available);
+//        }
+//        retVals[0]=lat;
+//        retVals[1]=lng;
+//        return retVals;
+//    }
+
 
     @Override
     protected void onStart() {
@@ -309,25 +400,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
 
-    @Override
-    public void onLocationChanged(Location location) {
 
-    }
 
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String s) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-
-    }
+//    @Override
+//    public void onStatusChanged(String s, int i, Bundle bundle) {
+//
+//    }
+//
+//    @Override
+//    public void onProviderEnabled(String s) {
+//
+//    }
+//
+//    @Override
+//    public void onProviderDisabled(String s) {
+//
+//    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -343,6 +431,34 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+
+//    private void getDeviceLocation() {
+//        /*
+//         * Get the best and most recent location of the device, which may be null in rare
+//         * cases when a location is not available.
+//         */
+//
+//        if (mLocationPermissionGranted) {
+//            Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
+//            locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
+//                @Override
+//                public void onComplete(@NonNull Task<Location> task) {
+//                    if (task.isSuccessful()) {
+//                        // Set the map's camera position to the current location of the device.
+//                        mLastKnownLocation = task.getResult();
+//
+//
+//                    } else {
+//
+//                        mLastKnownLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+//                    }
+//                }
+//            });
+//        }
+//
+//    }
+
 
 
 }

@@ -34,22 +34,12 @@ public class OptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_options);
         boolean lastDayButtonState = sharedpreferences.getBoolean(BUTTON_STATE_DAY, false);
         boolean lastNightButtonState = sharedpreferences.getBoolean(BUTTON_STATE_NIGHT, false);
-
-
         final RadioGroup rg = findViewById(R.id.radio_group);
         final RadioButton dayModeRButton = findViewById(R.id.day_mode);
         final RadioButton nightModeButton = findViewById(R.id.night_mode);
 
-
-
         dayModeRButton.setChecked(lastDayButtonState);
-        System.out.println("DaybuttonState: " + lastDayButtonState);
-
         nightModeButton.setChecked(lastNightButtonState);
-
-        System.out.println("NightbuttonState: " + lastNightButtonState);
-
-
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 

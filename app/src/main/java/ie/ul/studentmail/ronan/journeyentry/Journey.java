@@ -83,45 +83,36 @@ public class Journey {
         return journeyEnd;
     }
 
-    public void setJourneyEnd(String journeyEnd) {
-        this.journeyEnd = journeyEnd;
-    }
+
 
     public String getStartLat() {
         return startLat;
     }
 
-    public void setStartLat(String startLat) {
-        this.startLat = startLat;
-    }
+
 
     public String getStartLong() {
         return startLong;
     }
 
-    public void setStartLong(String startLong) {
-        this.startLong = startLong;
-    }
+
 
     public String getEndLat() {
         return endLat;
     }
 
-    public void setEndLat(String endLat) {
-        this.endLat = endLat;
-    }
+
 
     public String getEndLong() {
         return endLong;
     }
 
-    public void setEndLong(String endLong) {
-        this.endLong = endLong;
-    }
+
 
     public double getDistance(){
         return distance;
     }
+
     public void setDistance(double distance) {
         this.distance = distance;
     }

@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 
 public class JourneyEntryConfirm extends AppCompatActivity {
 
@@ -55,13 +57,27 @@ public class JourneyEntryConfirm extends AppCompatActivity {
         viewText.setText("Steps: " + stepCount);
 
         viewText=findViewById(R.id.distanceText);
-        viewText.setText(String.format("Step Distance: %.2f km", distance));
+        viewText.setText(String.format(Locale.UK,"Step Distance: %.2f km", distance));
 
         viewText=findViewById(R.id.startDateTimeText);
         viewText.setText("From: " + journeyStartInfo);
 
         viewText = findViewById(R.id.endDateTimeText);
         viewText.setText("Untill: " + journeyEndInfo);
+
+        if(journeyInfo[3]==null)
+            journeyInfo[3] = "0.0";
+        if(journeyInfo[4]==null)
+            journeyInfo[4] = "0.0";
+        if(journeyInfo[5]==null)
+            journeyInfo[5] = "0.0";
+        if(journeyInfo[6]==null)
+            journeyInfo[6] = "0.0";
+
+
+        for(int i=0; i<journeyInfo.length; i++){
+            System.out.println("i= " + i + " - " + journeyInfo[i]);
+        }
 
     }
 
@@ -75,7 +91,7 @@ public class JourneyEntryConfirm extends AppCompatActivity {
 
         Journey journey = new Journey(journeyInfo[7],
                                       steps,
-                                      String.format("%.2f km", distance),
+                                      String.format(Locale.UK, "%.2f km", distance),
                                       journeyStartInfo,
                                       journeyEndInfo,
                                       journeyInfo[3],

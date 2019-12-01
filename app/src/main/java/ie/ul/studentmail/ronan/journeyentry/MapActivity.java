@@ -1,22 +1,27 @@
+
 package ie.ul.studentmail.ronan.journeyentry;
 
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
+//import android.support.annotation.NonNull;
+//import android.support.v4.app.ActivityCompat;
+//import android.support.v4.content.ContextCompat;
+//import android.support.v7.app.AlertDialog;
+//import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -39,7 +44,8 @@ import com.google.android.gms.tasks.Task;
 /**
  * An activity that displays a map showing the place at the device's current location.
  */
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapActivity extends AppCompatActivity
+        implements OnMapReadyCallback {
 
     private static final String TAG = MapActivity.class.getSimpleName();
     private GoogleMap mMap;
@@ -87,11 +93,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_map);
 
-        //hide the title bar
-        getSupportActionBar().hide();
-
         // Construct a GeoDataClient.
         mGeoDataClient = Places.getGeoDataClient(this, null);
+
+        //hide the title bar
+        getSupportActionBar().hide();
 
         // Construct a PlaceDetectionClient.
         mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
@@ -177,7 +183,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
 
         // Prompt the user for permission.
-        //getLocationPermission();
+        getLocationPermission();
 
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI();
@@ -196,7 +202,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
          */
         try {
             if (mLocationPermissionGranted) {
-
                 Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
                 locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
                     @Override
@@ -248,7 +253,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
      */
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
+                                           @NonNull String permissions[],
                                            @NonNull int[] grantResults) {
         mLocationPermissionGranted = false;
         switch (requestCode) {

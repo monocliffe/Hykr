@@ -48,7 +48,7 @@
                 android:angle="270" />
             <stroke
                 android:width="2dp"
-                android:color="@color/buttonTrim" />
+                android:color="@color/alternate" />
             <corners
                 android:radius="4dp" />
             <padding
