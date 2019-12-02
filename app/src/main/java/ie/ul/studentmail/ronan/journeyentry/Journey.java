@@ -1,10 +1,8 @@
 package ie.ul.studentmail.ronan.journeyentry;
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 
@@ -39,7 +37,10 @@ public class Journey {
         this.startLong = startLong;
         this.endLat = endLat;
         this.endLong = endLong;
-        distance = convertDistance(startLat,startLong,endLat,endLong);
+        distance = calcDistance(Double.valueOf(startLat),
+                                Double.valueOf(startLong),
+                                Double.valueOf(endLat),
+                                Double.valueOf(endLong));
 
     }
 
@@ -51,69 +52,43 @@ public class Journey {
         return id;
     }
 
-    public void setSteps(int steps){
-        this.steps=steps;
-    }
-
-    public int getSteps(){
+    int getSteps(){
         return steps;
     }
 
-    public void setStepDistance(String stepDistance){
-        this.stepDistance = stepDistance;
-    }
-
-    public String getStepDistance() {
+    String getStepDistance() {
         return stepDistance;
     }
 
-    public void setJourneyStart(LocalDateTime journeyStartTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String journeyStart = journeyStartTime.format(formatter);
-        this.journeyStart = journeyStart;
-    }
-
-
-    public String getJourneyStart() {
+    String getJourneyStart() {
         return journeyStart;
     }
 
-
-    public String getJourneyEnd() {
+    String getJourneyEnd() {
         return journeyEnd;
     }
 
-
-
-    public String getStartLat() {
+    String getStartLat() {
         return startLat;
     }
 
-
-
-    public String getStartLong() {
+    String getStartLong() {
         return startLong;
     }
 
-
-
-    public String getEndLat() {
+    String getEndLat() {
         return endLat;
     }
 
-
-
-    public String getEndLong() {
+    String getEndLong() {
         return endLong;
     }
 
-
-
-    public double getDistance(){
+    double getDistance(){
         return distance;
     }
 
-    public void setDistance(double distance) {
+    void setDistance(double distance) {
         this.distance = distance;
     }
 
@@ -125,34 +100,27 @@ public class Journey {
         this.name = name;
     }
 
-
-    public double convertDistance(String lat1Str, String lng1Str, String lat2Str, String lng2Str){
-        double lat1, lat2, lng1, lng2;
-
-        lat1=Double.parseDouble(lat1Str);
-        lng1=Double.parseDouble(lng1Str);
-        lat2=Double.parseDouble(lat2Str);
-        lng2=Double.parseDouble(lng2Str);
-
-        if ((lat1 == lat2) && (lng1 == lng2)) {
-            return 0;
-        }
-        double theta = lng1 - lng2;
-        double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
-        dist = Math.acos(dist);
-        dist = Math.toDegrees(dist);
-
-        dist = dist * 1.609344;
-        System.out.println("dist: " + dist);
-        return (dist);
+    //Distance between two points on the globe is calculated using the Haversine formula.
+    private static double calcDistance(double lat1, double lon1, double lat2, double lon2) {
+        final int R = 6371; //Radius of planet earth!!
+        double latDistance = toRad(lat2-lat1);
+        double lonDistance = toRad(lon2-lon1);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) +
+                Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+                        Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return R*c;
     }
 
+    private static Double toRad(Double value) {
+        return value * Math.PI / 180;
+    }
+
+    @NonNull
     public String toString(){
 
         return name+","+steps+","+stepDistance+","+journeyStart+","+journeyEnd+","+
                       startLat+","+startLong+","+endLat+","+endLong+","+String.format(Locale.UK,"%.2f km", distance) + "," + id;
 
     }
-
-
 }

@@ -1,12 +1,8 @@
 
 package ie.ul.studentmail.ronan.journeyentry;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
@@ -15,12 +11,8 @@ import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.room.Room;
 
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,48 +70,43 @@ public class GraphActivity extends AppCompatActivity {
         GraphView graphStep = findViewById(R.id.stepGraph);
         LineGraphSeries stepSeries = new LineGraphSeries<>(generateData(1));
         stepSeries.setTitle("Step Log");
-        stepSeries.setColor(getColor(R.color.colorPrimary));
+        stepSeries.setColor(getColor(R.color.graphLines));
         stepSeries.setDrawDataPoints(true);
         stepSeries.setDataPointsRadius(15);
         stepSeries.setThickness(8);
         graphStep.addSeries(stepSeries);
         stepSeries.setOnDataPointTapListener(tapListen);
-        TextView highStep = findViewById(R.id.highStep);
-        String holder = getString(R.string.most_steps_taken) + " " + stepSeries.getHighestValueY();
+        graphStep.setTitle(getString(R.string.most_steps_taken) + " " + stepSeries.getHighestValueY());
+
         graphStep.getViewport().setMaxX(journeyList.size());
         graphStep.getViewport().setMaxY(stepSeries.getHighestValueY()+(stepSeries.getHighestValueY()*0.2));
         graphStep.getViewport().setYAxisBoundsManual(true);
         graphStep.getViewport().setXAxisBoundsManual(true);
-        highStep.setText(holder);
 
         GraphView graphDist = findViewById(R.id.distGraph);
         LineGraphSeries distSeries = new LineGraphSeries<>(generateData(2));
-        stepSeries.setTitle("Distance Log");
-        stepSeries.setColor(getColor(R.color.colorPrimary));
+        distSeries.setTitle("Distance Log");
+        distSeries.setColor(getColor(R.color.graphLines));
         distSeries.setDrawDataPoints(true);
         distSeries.setDataPointsRadius(15);
         distSeries.setThickness(8);
         graphDist.addSeries(distSeries);
         distSeries.setOnDataPointTapListener(tapListen);
-        TextView highDist = findViewById(R.id.highDist);
-        holder = getString(R.string.longest_distance) + String.format(Locale.UK," %.2f km", distSeries.getHighestValueY());
+        //TextView highDist = findViewById(R.id.highDist);
+        //holder = getString(R.string.longest_distance) + String.format(Locale.UK," %.2f km", distSeries.getHighestValueY());
+        graphDist.setTitle(getString(R.string.longest_distance) + String.format(Locale.UK," %.2f km", distSeries.getHighestValueY()));
+
         graphDist.getViewport().setMaxX(journeyList.size());
         graphDist.getViewport().setMaxY(distSeries.getHighestValueY()+(distSeries.getHighestValueY()*0.2));
         graphDist.getViewport().setYAxisBoundsManual(true);
         graphDist.getViewport().setXAxisBoundsManual(true);
-        highDist.setText(holder);
+        //highDist.setText(holder);
 
-        TextView totalDistView = findViewById(R.id.totalDist);
-        holder = getString(R.string.totalDist) + " " + String.format(Locale.UK," %.2f km",totalDist);
-        totalDistView.setText(holder);
-
-        TextView totalStepView = findViewById(R.id.totalSteps);
-        holder = getString(R.string.totalSteps) + " " + totalSteps;
-        totalStepView.setText(holder);
-
-        TextView totalJourneyView = findViewById(R.id.totalJourney);
-        holder = getString(R.string.totalJourney) + " " + totalJourneys;
-        totalJourneyView.setText(holder);
+        TextView summaryInfoText = findViewById(R.id.summaryInfo);
+        String holder = getString(R.string.totalJourney) + " " + totalJourneys + "\n";
+        holder += getString(R.string.summaryInfo) + " " + String.format(Locale.UK," %.2f km\n",totalDist);
+        holder += getString(R.string.totalSteps) + " " + totalSteps;
+        summaryInfoText.setText(holder);
     }
 
     private DataPoint[] generateData(int type) {

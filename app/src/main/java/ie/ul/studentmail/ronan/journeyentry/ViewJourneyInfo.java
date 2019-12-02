@@ -49,7 +49,7 @@ public class ViewJourneyInfo extends AppCompatActivity {
 
                           "Start@: " + journeyInfo[5] + ", " + journeyInfo[6] + "\n" +
                           "End@:   " + journeyInfo[7] + ", " + journeyInfo[8] + "\n\n" +
-                          "Distance Covered: " + journeyInfo[9] + "\n";
+                          "Distance btw. Start and End: " + journeyInfo[9] + "\n";
 
 
 
@@ -59,5 +59,9 @@ public class ViewJourneyInfo extends AppCompatActivity {
 
     }
 
+    public void onClickedBack(View v){
+        Intent intent = new Intent(ViewJourneyInfo.this, MainActivity.class);
+        startActivity(intent);
+    }
 
 }

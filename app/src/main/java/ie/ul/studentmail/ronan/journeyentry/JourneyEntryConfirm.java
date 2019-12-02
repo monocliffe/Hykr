@@ -63,7 +63,7 @@ public class JourneyEntryConfirm extends AppCompatActivity {
         viewText.setText("From: " + journeyStartInfo);
 
         viewText = findViewById(R.id.endDateTimeText);
-        viewText.setText("Untill: " + journeyEndInfo);
+        viewText.setText("Until: " + journeyEndInfo);
 
         if(journeyInfo[3]==null)
             journeyInfo[3] = "0.0";

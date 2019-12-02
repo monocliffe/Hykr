@@ -12,69 +12,36 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
         app:layout_anchor="@+id/constraintLayout"
         app:layout_anchorGravity="center">
 
 
         <TextView
-            android:id="@+id/totalDist"
+            android:id="@+id/summaryInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/totalDist"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/totalSteps"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/totalJourney"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:text="@string/totalJourney"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/totalDist"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.98" />
-
-        <TextView
-            android:id="@+id/totalSteps"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/totalSteps"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rect_background"
+            android:text="@string/summaryInfo"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/stepTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.53" />
 
         <TextView
             android:id="@+id/stepTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/stepTitle"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/highStep"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/highStep"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@string/highestStep"
-            android:textSize="22sp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="@string/stepTitle"
+            android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/stepGraph"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -84,23 +51,14 @@
             android:id="@+id/distTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/distTitle"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/highDist"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/highDist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@string/highestDist"
-            android:textSize="22sp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="@string/distTitle"
+            android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/distGraph"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.jjoe64.graphview.GraphView
@@ -108,19 +66,20 @@
             android:layout_width="match_parent"
             android:layout_height="222dp"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="36dp"
             app:layout_constraintBottom_toTopOf="@+id/distTitle"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.jjoe64.graphview.GraphView
             android:id="@+id/distGraph"
             android:layout_width="match_parent"
             android:layout_height="230dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="28dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

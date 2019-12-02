@@ -6,6 +6,7 @@
     <color name="alternate">#000000</color>
     <color name="colorAccent">#D81B60</color>
     <color name="buttonTrim">#03FF02</color>
+    <color name="graphLines">#D81B60</color>
 
 
     <color name="black_overlay">#000000</color>

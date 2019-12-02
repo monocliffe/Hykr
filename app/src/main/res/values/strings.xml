@@ -39,8 +39,8 @@
     <string name="highestDist">777</string>
     <string name="totalJourney">Journeys: </string>
     <string name="totalSteps">Total Steps: </string>
-    <string name="totalDist">Total Distance: </string>
-    <string name="longest_distance">Longest: </string>
+    <string name="summaryInfo">Total Distance: </string>
+    <string name="longest_distance">Longest Journey: </string>
     <string name="textview">TextView</string>
     <string name="button">Button</string>
     <string name="not_available">0</string>
@@ -48,6 +48,7 @@
     <string name="light_mode">Light Mode</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="delete_all_journeys">Delete All Journeys</string>
+    <string name="back_to_main">Back to Main</string>
 
 
 </resources>

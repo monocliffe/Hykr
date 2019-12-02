@@ -32,6 +32,8 @@ public class OptionsActivity extends AppCompatActivity {
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         setContentView(R.layout.activity_options);
+        getSupportActionBar().hide(); //hide the title bar
+
         boolean lastDayButtonState = sharedpreferences.getBoolean(BUTTON_STATE_DAY, false);
         boolean lastNightButtonState = sharedpreferences.getBoolean(BUTTON_STATE_NIGHT, false);
         final RadioGroup rg = findViewById(R.id.radio_group);
@@ -50,7 +52,7 @@ public class OptionsActivity extends AppCompatActivity {
                 if(checkedId == R.id.day_mode) {
 
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    Boolean isChecked = dayModeRButton.isChecked();
+                    boolean isChecked = dayModeRButton.isChecked();
                     // use this to add the new state
                     System.out.println("isCheckedDay: " + isChecked);
                     editor.putBoolean(BUTTON_STATE_DAY, isChecked);
@@ -100,11 +102,7 @@ public class OptionsActivity extends AppCompatActivity {
 
                         JourneyDataBase jDB = Room.databaseBuilder(getApplicationContext(), JourneyDataBase.class, "JourneyDatabase").allowMainThreadQueries().build();
                         jDB.getJourneyDAO().delete();
-
                         Toast.makeText(OptionsActivity.this, "All Journeys Deleted!", Toast.LENGTH_SHORT).show();
-
-
-
                     }})
                 .setNegativeButton(android.R.string.no, null).show();
     }

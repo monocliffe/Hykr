@@ -12,16 +12,16 @@ import java.util.List;
 public interface JourneyDAO {
 
     @Insert
-    public long addJourney(Journey journey);
+    long addJourney(Journey journey);
 
     @Update
-    public void updateJourney(Journey journey);
+    void updateJourney(Journey journey);
 
     @Delete
-    public void deleteJourney(Journey journey);
+    void deleteJourney(Journey journey);
 
     @Query("select * from journeys")
-    public List<Journey> getJourneys();
+    List<Journey> getJourneys();
 
     @Query("DELETE FROM journeys")
     void delete();
